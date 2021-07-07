@@ -27,7 +27,7 @@ class Input extends Component {
     this.setState({data:res.data});
   }
 
-  componentDidUpdate(prevProp,prevState){
+  componentDidUpdate(prevProps,prevState){
     if(this.state.data !== prevState.data){
       // console.log('pokemon************')
        this.setState({visible:true}) 
@@ -44,8 +44,11 @@ class Input extends Component {
         <form onSubmit={this.handleSubmit}>
                 <label>
                   Nombre: 
-                  </label>
+                </label>
+                <br /><br />
                 <input type="text" name="user" onChange={this.handleChangePokemon}/>
+                <br /><br />
+                
                 <button className="button" type="submit">ENVIAR</button>
             </form>
             {this.state.visible?<Card data={this.state.data}/>: <p>Busca un pokemon</p>}
