@@ -18,23 +18,30 @@ function App() {
     console.log(value);
   };
 
-  const getPokemon = () => {
-    //función para obtener los resultados de la búsqueda de la api y almacenarla en el state
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${input}`).then((res) => {
+  useEffect (() => {//para renderizar cualquier cambio que hay en el input
+    if(input !== ""){//condición que ponemos para que solo haga  el fetch en cuanto comencemos a escribir en el input
+      axios.get(`https://pokeapi.co/api/v2/pokemon/${input}`)
+      .then((res) => {
       console.log(res.data);
 
-      setPokemon([...pokemon, res.data]); //gurdamos en el estado de pokemon lo que tenemos más el resultado de la api
+      setPokemon([...pokemon, res.data]); //guardamos en el estado de pokemon lo que tenemos más el resultado de la api
       console.log(pokemon);//contine el resultado de input y de la api
 
       setInput(""); //actualizamos el state del input a vacio
-    });
-  };
+    })
+    .catch( err => {
+      //alert("No existe el pokemon")
+    })
+    
+    }
+
+  },[input]);
 
   return (
     <div>
       <label htmlFor="Bucador">Buscar Pokemon</label>
       <input type="text" name="buscador" value={input} onChange={handleChange} />
-      <button onClick={getPokemon}>Buscar</button>
+      {/* <button onClick={getPokemon}>Buscar</button> */}
       <div>
         <Pokelista data={pokemon}/>
       </div>
